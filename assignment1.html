@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="parent">
+        <input type="checkbox"/>Property
+      </div>
+      <div>
+      <ul class="child">
+        <li>
+          <input type="checkbox" />Edit Property
+        </li>
+        <li>
+          <input type="checkbox" />Remove Property
+        </li>
+        <li>
+          <input type="checkbox" />Add Property
+        </li>
+      </ul>
+      </div>
+      <div class="parent">
+        <input type="checkbox"/>Users
+      </div>
+      <div>
+      <ul class="child">
+        <li>
+          <input type="checkbox" />Add User
+        </li>
+        <li>
+          <input type="checkbox" />View User
+        </li>
+        <li>
+          <input type="checkbox" />Remove User
+        </li>
+      </ul>
+      </div>
+      <script src="jquery.js"></script>
+      <script>
+        $(".parent input").on('click',function(){
+            var _parent=$(this);
+            var nextli=$(this).parent().next().children().children();
+            
+            if(_parent.prop('checked')){
+               console.log('parent checked');
+               nextli.each(function(){
+                 $(this).children().prop('checked',true);
+               });
+              
+            }
+            else{
+              console.log('parent un checked');
+               nextli.each(function(){
+                 $(this).children().prop('checked',false);
+               });
+            
+            }
+          });
+          
+          $(".child input").on('click',function(){
+            
+            var ths=$(this);
+            var parentinput=ths.closest('div').prev().children();
+            var sibblingsli=ths.closest('ul').find('li');
+            
+            if(ths.prop('checked')){
+              console.log('child checked');
+              parentinput.prop('checked',true);
+            }
+            else{
+              console.log('child unchecked');
+                 var status=true;
+               sibblingsli.each(function(){
+                 console.log('sibb');
+                 if($(this).children().prop('checked')) status=false;
+               });
+                 if(status) parentinput.prop('checked',false);
+            }
+          });
+      </script>
+</body>
+</html>
